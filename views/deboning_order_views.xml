@@ -1,0 +1,79 @@
+<odoo>
+    <!-- Tree View -->
+    <record id="view_deboning_order_tree" model="ir.ui.view">
+        <field name="name">deboning.order.tree</field>
+        <field name="model">deboning.order</field>
+        <field name="arch" type="xml">
+            <tree string="Deboning Orders">
+                <field name="name"/>
+                <field name="custom_bom_id"/>
+                <field name="quantity"/>
+                <field name="warehouse_id"/>
+                <field name="state" decoration-success="state == 'done'"
+                       decoration-info="state== 'draft'"
+                       decoration-danger="state == 'cancel'"
+                       widget="badge"/>
+
+            </tree>
+        </field>
+    </record>
+
+    <!-- Form View -->
+    <record id="view_deboning_order_form" model="ir.ui.view">
+        <field name="name">deboning.order.form</field>
+        <field name="model">deboning.order</field>
+        <field name="arch" type="xml">
+            <form string="Deboning Order">
+                <header>
+                    <!-- Mark as Done button: visible only in 'draft' state -->
+                    <button name="action_done" type="object" string="Mark as Done"
+                            class="btn-primary"
+                            attrs="{'invisible': [('state', '!=', 'draft')]}"
+                            groups="deboning_process.group_deboning_stock_manager"/>
+
+                    <!-- Cancel button: visible only in 'draft' state -->
+                    <button name="action_cancel" type="object" string="Cancel" class="btn-secondary"
+                            attrs="{'invisible': [('state', '!=', 'draft')]}"/>
+                    <button name="action_back_to_draft" type="object" string="Back to Draft" class="btn-secondary"
+                            attrs="{'invisible': [('state', '!=', 'cancel')]}"
+                            groups="deboning_process.group_deboning_stock_manager"/>
+                    <!-- Status bar to show the current state -->
+                    <field name="state" widget="statusbar" statusbar_visible="draft,done,cancel"/>
+                </header>
+
+
+                <sheet>
+                    <group>
+                        <field name="name" attrs="{'readonly': [('state', '=', 'done')]}"/>
+                        <field name="custom_bom_id" attrs="{'readonly': [('state', '=', 'done')]}"/>
+                        <field name="quantity" attrs="{'readonly': [('state', '=', 'done')]}"/>
+                        <field name="warehouse_id" attrs="{'readonly': [('state', '=', 'done')]}"/>
+                    </group>
+                    <notebook>
+                        <page string="Deboning Lines">
+                            <field name="line_ids">
+                                <tree editable="top">
+                                    <field name="product_id" attrs="{'readonly': [('order_state', '=', 'done')]}"/>/>
+                                    <field name="quantity" attrs="{'readonly': [('order_state', '=', 'done')]}"/>/>
+                                    <field name="warehouse_id" attrs="{'readonly': [('order_state', '=', 'done')]}"/>/>
+                                    <field name="order_state" invisibl="1"/>
+                                </tree>
+                            </field>
+                        </page>
+                    </notebook>
+                </sheet>
+                <div class="oe_chatter">
+                    <field name="activity_ids"/>
+                    <field name="message_ids"/>
+                </div>
+            </form>
+        </field>
+    </record>
+
+    <!-- Action -->
+    <record id="action_deboning_order" model="ir.actions.act_window">
+        <field name="name">Deboning Orders</field>
+        <field name="res_model">deboning.order</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+</odoo>

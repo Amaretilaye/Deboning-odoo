@@ -1,0 +1,49 @@
+<odoo>
+    <data noupdate="1">
+
+        <!-- Define the Deboning module category -->
+        <record id="module_deboning_order" model="ir.module.category">
+            <field name="name">Deboning</field>
+            <field name="description">Deboning order category</field>
+            <field name="sequence">10</field>
+        </record>
+
+        <!-- Define the Stock Manager group -->
+        <record id="group_deboning_stock_manager" model="res.groups">
+            <field name="name">Stock Manager</field>
+            <field name="category_id" ref="deboning_process.module_deboning_order"/>
+        </record>
+
+        <!-- Define the General Manager group -->
+        <record id="group_deboning_general_manager" model="res.groups">
+            <field name="name">General Manager</field>
+            <field name="category_id" ref="deboning_process.module_deboning_order"/>
+        </record>
+
+        <!-- Full Access for General Manager -->
+        <record id="rule_full_access_general_manager" model="ir.rule">
+            <field name="name">Full Access for General Manager</field>
+            <field name="model_id" ref="deboning_process.model_deboning_order"/> <!-- Adjust the model as needed -->
+            <field name="domain_force">[('id', '!=', 0)]</field> <!-- Domain that always evaluates to True -->
+            <field name="groups" eval="[(4, ref('deboning_process.group_deboning_general_manager'))]"/>
+        </record>
+
+        <!-- Restricted Access for Stock Manager by Warehouse -->
+        <record id="rule_restricted_access_stock_manager" model="ir.rule">
+            <field name="name">Restricted Access for Stock Manager by Warehouse</field>
+            <field name="model_id" ref="deboning_process.model_deboning_order"/> <!-- Adjust the model as needed -->
+            <field name="domain_force">[('warehouse_id', 'in', user.allowed_warehouses_ids.ids)]
+            </field> <!-- Domain to filter by warehouse_id -->
+            <field name="groups" eval="[(4, ref('deboning_process.group_deboning_stock_manager'))]"/>
+        </record>
+
+
+        <record id="rule_restricted_access_group_user" model="ir.rule">
+            <field name="name">Restricted Access for Users with group_user</field>
+            <field name="model_id" ref="deboning_process.model_deboning_order"/> <!-- Adjust the model as needed -->
+            <field name="domain_force">[('user_id', '=', user.id)]</field> <!-- Domain to filter by user_id -->
+            <field name="groups" eval="[(4, ref('base.group_user'))]"/> <!-- Group for general users -->
+        </record>
+
+    </data>
+</odoo>

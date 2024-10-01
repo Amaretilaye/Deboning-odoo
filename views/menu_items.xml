@@ -1,0 +1,10 @@
+<odoo>
+    <!-- Main Menu -->
+    <menuitem id="menu_deboning_process_root" name="Deboning Process" sequence="10"/>
+
+    <!-- Submenu: BoM -->
+    <menuitem id="menu_custom_bom" name="Bill of Materials" parent="menu_deboning_process_root" action="action_custom_bom" sequence="20"/>
+
+    <!-- Submenu: Deboning Order -->
+    <menuitem id="menu_deboning_order" name="Deboning Orders" parent="menu_deboning_process_root" action="action_deboning_order" sequence="10"/>
+</odoo>

@@ -1,0 +1,5 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_custom_bom,access.custom.bom,model_custom_bom,base.group_user,1,1,1,1
+access_custom_bom_line,access.custom.bom.line,model_custom_bom_line,base.group_user,1,1,1,1
+access_deboning_order,access.deboning.order,model_deboning_order,base.group_user,1,1,1,1
+access_deboning_order_line,access.deboning.order.line,model_deboning_order_line,base.group_user,1,1,1,1
