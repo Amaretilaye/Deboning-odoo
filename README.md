@@ -1,4 +1,4 @@
-# Deboning Accuracy for Chicken and Meat Stock Valuation
+#Deponing Accuracy for Chicken and Meat Stock Valuation
 
 This Odoo module is designed to ensure accurate stock valuation for chicken and meat deboning processes across multiple warehouses. The module automates the calculation of deboned meat quantities and tracks the movement of stock between specific locations, ensuring precise management of in-stock and out-stock items.
 
